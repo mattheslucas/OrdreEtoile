@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Ordre Étoilé | Star Citizen Organization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET ET BASE --- */
+        :root {
+            --primary: #00d0ff; /* Bleu Cyan RSI */
+            --bg-dark: #050a10; /* Fond noir profond */
+            --bg-panel: #0f1724; /* Fond des panneaux */
+            --text-main: #c7d5e0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            /* Mise à jour de l'image de fond ici */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 208, 255, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
+                url('background.jpg'); 
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(5, 10, 16, 0.9);
+            border-bottom: 1px solid rgba(0, 208, 255, 0.3);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 208, 255, 0.5);
+        }
+
+        /* --- HERO SECTION (Le haut de page) --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            letter-spacing: 5px;
+            background: -webkit-linear-gradient(#fff, #8f8f8f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: var(--primary);
+        }
+
+        /* --- BOUTON STYLE SC --- */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: rgba(0, 208, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+            /* L'effet coins coupés */
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 208, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION CONTENU --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .about-section {
+            background: rgba(15, 23, 36, 0.8);
+            padding: 40px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: white;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        /* --- GALERIE MASONRY (Sans JS complexe) --- */
+        .gallery-grid {
+            column-count: 3; /* Nombre de colonnes */
+            column-gap: 15px;
+        }
+
+        .gallery-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+            background: #000;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover img {
+            opacity: 1;
+        }
+
+        /* Responsive pour mobile */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .gallery-grid { column-count: 1; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">L'ORDRE ÉTOILÉ</div>
+        <a href="#recrutement" style="color: var(--primary); text-decoration: none; font-family: 'Orbitron'; border: 1px solid var(--primary); padding: 5px 15px; font-size: 0.8rem;">JOIN US</a>
+    </nav>
+
+    <header class="hero">
+        <h1>L'ORDRE ÉTOILÉ</h1>
+        <p>EXPLORATION // SECURITE // COMMERCE</p>
+        
+        <a href="https://forms.google.com/ton-lien-ici" target="_blank" class="cta-button" id="recrutement">
+            S'ENRÔLER MAINTENANT
+        </a>
+    </header>
+
+    <div class="container">
+        
+        <div class="about-section">
+            <h2 class="section-title">/// TRANSMISSION ENTRANT...</h2>
+            <p style="font-size: 1.2rem; line-height: 1.6;">
+                Nous sommes L'Ordre Étoilé. Une organisation dédiée à la protection des routes commerciales et à l'exploration des confins de l'univers connu. 
+                Que vous soyez pilote de chasse, mineur industriel ou médecin de combat, vous avez une place parmi nous.
+                <br><br>
+                Nos opérations couvrent Stanton et s'étendront bientôt vers Pyro. Rejoignez une flotte structurée, active et ambitieuse.
+            </p>
+        </div>
+
+        <h2 class="section-title">/// ARCHIVES VISUELLES</h2>
+        <div class="gallery-grid">
+            
+            <div class="gallery-item">
+                <img src="image1.jpg" alt="Vaisseau Combat">
+            </div>
+
+            <div class="gallery-item">
+                <img src="image2.jpg" alt="Exploration">
+            </div>
+
+            <div class="gallery-item">
+                <img src="image3.png" alt="Personnage">
+            </div>
+
+            <div class="gallery-item">
+                <img src="image4.jpg" alt="Minage">
+            </div>
+
+             <div class="gallery-item">
+                <img src="image5.png" alt="Ville">
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2956 L'Ordre Étoilé. Ce site n'est pas affilié à Cloud Imperium Games.
+    </footer>
+
+</body>
+</html>
