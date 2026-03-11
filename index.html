@@ -335,34 +335,52 @@
             margin: 0;
         }
 
-        /* ── GALERIE ── */
+        /* ── GALERIE FILM STRIP ── */
         .gallery-section { margin-bottom: 100px; }
 
-        .gallery-grid {
-            column-count: 3;
-            column-gap: 8px;
+        .filmstrip-wrapper {
+            overflow: hidden;
+            position: relative;
+            /* fondu sur les bords */
+            mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+        }
+
+        .filmstrip-track {
+            display: flex;
+            gap: 8px;
+            width: max-content;
+            animation: filmscroll 40s linear infinite;
+        }
+
+        .filmstrip-wrapper:hover .filmstrip-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes filmscroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .gallery-item {
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 8px;
+            flex-shrink: 0;
+            width: 300px;
+            height: 200px;
             background: #000;
             border: 1px solid rgba(255,255,255,0.05);
             transition: all 0.3s ease;
-            position: relative;
             overflow: hidden;
         }
 
         .gallery-item:hover {
             border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 208, 255, 0.15);
-            transform: scale(1.01);
+            box-shadow: 0 0 20px rgba(0, 208, 255, 0.2);
         }
 
         .gallery-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
             opacity: 0.75;
             transition: opacity 0.3s;
@@ -607,14 +625,39 @@
         <div class="gallery-section" id="galerie">
             <div class="section-label">// SCREENSHOTS INGAME</div>
             <h2 class="section-title">/// ARCHIVES VISUELLES</h2>
-            <div class="gallery-grid">
-                <div class="gallery-item"><img src="image1.jpg" alt="Vaisseau Combat"></div>
-                <div class="gallery-item"><img src="image2.jpg" alt="Exploration"></div>
-                <div class="gallery-item"><img src="image3.png" alt="Personnage"></div>
-                <div class="gallery-item"><img src="image4.jpg" alt="Minage"></div>
-                <div class="gallery-item"><img src="image4.png" alt="Minage 2"></div>
-                <div class="gallery-item"><img src="image5.png" alt="Ville"></div>
-                <div class="gallery-item"><img src="image6.png" alt="Scene 6"></div>
+            <div class="filmstrip-wrapper">
+                <div class="filmstrip-track">
+                    <!-- Série 1 -->
+                    <div class="gallery-item"><img src="image1.jpg" alt="Combat"></div>
+                    <div class="gallery-item"><img src="image2.jpg" alt="Exploration"></div>
+                    <div class="gallery-item"><img src="image3.png" alt="Personnage"></div>
+                    <div class="gallery-item"><img src="image4.jpg" alt="Minage"></div>
+                    <div class="gallery-item"><img src="image4.png" alt="Minage 2"></div>
+                    <div class="gallery-item"><img src="image5.png" alt="Ville"></div>
+                    <div class="gallery-item"><img src="image6.png" alt="Scene"></div>
+                    <div class="gallery-item"><img src="capture 1.jpg" alt="Capture 1"></div>
+                    <div class="gallery-item"><img src="capture 2.jpg" alt="Capture 2"></div>
+                    <div class="gallery-item"><img src="capture 3.jpg" alt="Capture 3"></div>
+                    <div class="gallery-item"><img src="capture 4.jpg" alt="Capture 4"></div>
+                    <div class="gallery-item"><img src="capture 5.jpg" alt="Capture 5"></div>
+                    <div class="gallery-item"><img src="capture 6.jpg" alt="Capture 6"></div>
+                    <div class="gallery-item"><img src="capture 7.jpg" alt="Capture 7"></div>
+                    <!-- Série 2 — copie pour boucle seamless -->
+                    <div class="gallery-item"><img src="image1.jpg" alt="Combat"></div>
+                    <div class="gallery-item"><img src="image2.jpg" alt="Exploration"></div>
+                    <div class="gallery-item"><img src="image3.png" alt="Personnage"></div>
+                    <div class="gallery-item"><img src="image4.jpg" alt="Minage"></div>
+                    <div class="gallery-item"><img src="image4.png" alt="Minage 2"></div>
+                    <div class="gallery-item"><img src="image5.png" alt="Ville"></div>
+                    <div class="gallery-item"><img src="image6.png" alt="Scene"></div>
+                    <div class="gallery-item"><img src="capture 1.jpg" alt="Capture 1"></div>
+                    <div class="gallery-item"><img src="capture 2.jpg" alt="Capture 2"></div>
+                    <div class="gallery-item"><img src="capture 3.jpg" alt="Capture 3"></div>
+                    <div class="gallery-item"><img src="capture 4.jpg" alt="Capture 4"></div>
+                    <div class="gallery-item"><img src="capture 5.jpg" alt="Capture 5"></div>
+                    <div class="gallery-item"><img src="capture 6.jpg" alt="Capture 6"></div>
+                    <div class="gallery-item"><img src="capture 7.jpg" alt="Capture 7"></div>
+                </div>
             </div>
         </div>
 
