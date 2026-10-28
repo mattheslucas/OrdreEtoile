@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Ordre Étoilé | Star Citizen Organization</title>
     <meta name="description" content="L'Ordre Étoilé — organisation Star Citizen dédiée à l'exploration, la sécurité et le commerce. Rejoignez-nous dans le 'verse.">
-    <link rel="icon" href="logo.png">
+    <link rel="icon" href="logo.webp">
+    <script>
+        if (localStorage.getItem('theme') === 'light') document.documentElement.dataset.theme = 'light';
+    </script>
+    <style>html[data-theme="light"] body { /* pré-appliqué avant paint */ }</style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,8 +24,29 @@
             --border: rgba(255, 255, 255, 0.08);
             --text: #c9d2d9;
             --text-dim: #7d8894;
+            --overlay-1: rgba(7, 10, 14, 0.88);
+            --overlay-2: rgba(7, 10, 14, 0.94);
+            --nav-bg: rgba(7, 10, 14, 0.78);
+            --lightbox-bg: rgba(4, 6, 9, 0.92);
             --ease: cubic-bezier(0.22, 1, 0.36, 1);
         }
+
+        body.light {
+            --accent: #0a7ea4;
+            --accent-dim: rgba(10, 126, 164, 0.1);
+            --accent-line: rgba(10, 126, 164, 0.35);
+            --bg: #eef1f4;
+            --bg-panel: rgba(255, 255, 255, 0.55);
+            --border: rgba(10, 20, 30, 0.12);
+            --text: #2a333c;
+            --text-dim: #5f6b76;
+            --overlay-1: rgba(238, 241, 244, 0.88);
+            --overlay-2: rgba(238, 241, 244, 0.94);
+            --nav-bg: rgba(238, 241, 244, 0.8);
+            --lightbox-bg: rgba(230, 234, 238, 0.92);
+        }
+
+        body.light ::selection { background: var(--accent); color: #fff; }
 
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -30,8 +55,8 @@
             margin: 0;
             background-color: var(--bg);
             background-image:
-                linear-gradient(rgba(7, 10, 14, 0.88), rgba(7, 10, 14, 0.94)),
-                url('background.jpg');
+                linear-gradient(var(--overlay-1), var(--overlay-2)),
+                url('background.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -54,7 +79,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 16px clamp(20px, 5vw, 64px);
-            background: rgba(7, 10, 14, 0.78);
+            background: var(--nav-bg);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
@@ -79,6 +104,30 @@
             object-fit: cover;
             border: 1px solid var(--border);
         }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.25s var(--ease);
+            flex-shrink: 0;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(15deg);
+        }
+
+        body.light .theme-toggle .icon-sun { display: none; }
+        body:not(.light) .theme-toggle .icon-moon { display: none; }
 
         .nav-links { display: flex; gap: 28px; align-items: center; }
 
@@ -139,6 +188,10 @@
             position: relative;
         }
 
+        .hero h1 { color: #f4f7f9; }
+        body.light .hero h1 { color: #1a222b; }
+        body.light .hero-scroll { color: #5f6b76; }
+
         .hero-logo {
             width: 96px;
             height: 96px;
@@ -166,7 +219,6 @@
             font-size: clamp(2.2rem, 6vw, 4.6rem);
             font-weight: 900;
             line-height: 1.05;
-            color: #f4f7f9;
             margin-bottom: 18px;
             opacity: 0;
             animation: fadeUp 0.9s var(--ease) 0.4s forwards;
@@ -315,6 +367,40 @@
             margin: 0;
         }
 
+        /* ── STATS ── */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 28px 30px;
+            transition: border-color 0.3s var(--ease);
+        }
+
+        .stat:hover { border-color: var(--accent-line); }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
         /* ── PILLIERS ── */
         .pillars {
             display: grid;
@@ -454,7 +540,7 @@
             z-index: 1000;
             display: grid;
             place-items: center;
-            background: rgba(4, 6, 9, 0.92);
+            background: var(--lightbox-bg);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             opacity: 0;
@@ -515,6 +601,94 @@
 
         .lightbox-prev:active { transform: translate(-3px, -50%); }
         .lightbox-next:active { transform: translate(3px, -50%); }
+
+        /* ── FLOTTE ── */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .ship-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.35s var(--ease);
+        }
+
+        .ship-card:hover {
+            border-color: var(--accent-line);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .ship-media {
+            height: 190px;
+            background:
+                radial-gradient(ellipse at 50% 120%, var(--accent-dim), transparent 70%),
+                rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        .ship-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s var(--ease);
+        }
+
+        .ship-card:hover .ship-media img { transform: scale(1.07); }
+
+        .ship-media .placeholder {
+            font-size: 2.6rem;
+            opacity: 0.35;
+            transition: opacity 0.4s ease;
+        }
+
+        .ship-card:hover .ship-media .placeholder { opacity: 0.6; }
+
+        .ship-body { padding: 24px 26px 28px; }
+
+        .ship-role {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .ship-body h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .ship-body p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin: 0 0 14px;
+        }
+
+        .ship-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .ship-tag {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            padding: 4px 10px;
+        }
 
         /* ── DISCORD ── */
         .discord-banner {
@@ -639,7 +813,7 @@
         /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
             .about-grid { grid-template-columns: 1fr; }
-            .pillars { grid-template-columns: 1fr; }
+            .pillars, .stats, .fleet-grid { grid-template-columns: 1fr; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
             .nav-links { gap: 16px; }
             .nav-link:not(.primary) { display: none; }
@@ -666,18 +840,22 @@
 
     <!-- ── NAV ── -->
     <nav>
-        <a href="#" class="logo"><img src="logo.png" alt="">L'ORDRE ÉTOILÉ</a>
+        <a href="#" class="logo"><img src="logo.webp" alt="">L'ORDRE ÉTOILÉ</a>
         <div class="nav-links">
             <a href="#a-propos" class="nav-link">À propos</a>
             <a href="#galerie" class="nav-link">Galerie</a>
+            <a href="#flotte" class="nav-link">Flotte</a>
             <a href="https://discord.gg/8Nr6rSPerB" target="_blank" rel="noopener" class="nav-link">Discord</a>
             <a href="#recrutement" class="nav-link primary">S'enrôler</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Basculer le thème clair/sombre">
+                <span class="icon-sun">☀</span><span class="icon-moon">☾</span>
+            </button>
         </div>
     </nav>
 
     <!-- ── HERO ── -->
     <header class="hero">
-        <img src="logo.png" alt="Logo L'Ordre Étoilé" class="hero-logo">
+        <img src="logo.webp" alt="Logo L'Ordre Étoilé" class="hero-logo">
         <div class="hero-tag">Organisation — Star Citizen</div>
         <h1>L'ORDRE ÉTOILÉ</h1>
         <p class="hero-sub">Exploration · Sécurité · Commerce</p>
@@ -716,6 +894,24 @@
             </div>
         </section>
 
+        <!-- ── STATS ── -->
+        <section class="reveal">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" data-count="14">0</div>
+                    <div class="stat-label">Membres actifs</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" data-count="3">0</div>
+                    <div class="stat-label">Piliers d'activité</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" data-count="3">0</div>
+                    <div class="stat-label">Systèmes d'opération</div>
+                </div>
+            </div>
+        </section>
+
         <!-- ── PILLIERS ── -->
         <section class="reveal">
             <div class="section-head">
@@ -749,61 +945,104 @@
             </div>
             <div class="gallery-grid">
                 <figure class="gallery-item tall" data-caption="Combat spatial">
-                    <img src="image1.jpg" alt="Combat spatial" loading="lazy">
+                    <img src="image1.webp" alt="Combat spatial" loading="lazy">
                     <figcaption class="gallery-caption"><span>Combat spatial</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Exploration">
-                    <img src="image2.jpg" alt="Exploration" loading="lazy">
+                    <img src="image2.webp" alt="Exploration" loading="lazy">
                     <figcaption class="gallery-caption"><span>Exploration</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Personnage">
-                    <img src="image3.png" alt="Personnage" loading="lazy">
+                    <img src="image3.webp" alt="Personnage" loading="lazy">
                     <figcaption class="gallery-caption"><span>Personnage</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item tall" data-caption="Minage">
-                    <img src="image4.jpg" alt="Minage" loading="lazy">
+                    <img src="image4.webp" alt="Minage" loading="lazy">
                     <figcaption class="gallery-caption"><span>Minage</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item wide" data-caption="Opération minière">
-                    <img src="image4.png" alt="Opération minière" loading="lazy">
+                    <img src="image4.webp" alt="Opération minière" loading="lazy">
                     <figcaption class="gallery-caption"><span>Opération minière</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Ville">
-                    <img src="image5.png" alt="Ville" loading="lazy">
+                    <img src="image5.webp" alt="Ville" loading="lazy">
                     <figcaption class="gallery-caption"><span>Ville</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Scène">
-                    <img src="image6.png" alt="Scène" loading="lazy">
+                    <img src="image6.webp" alt="Scène" loading="lazy">
                     <figcaption class="gallery-caption"><span>Scène</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item wide" data-caption="Capture 1">
-                    <img src="Capture 1.jpg" alt="Capture 1" loading="lazy">
+                    <img src="Capture 1.webp" alt="Capture 1" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 1</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 2">
-                    <img src="Capture 2.jpg" alt="Capture 2" loading="lazy">
+                    <img src="Capture 2.webp" alt="Capture 2" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 2</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 3">
-                    <img src="Capture 3.jpg" alt="Capture 3" loading="lazy">
+                    <img src="Capture 3.webp" alt="Capture 3" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 3</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 4">
-                    <img src="Capture 4.jpg" alt="Capture 4" loading="lazy">
+                    <img src="Capture 4.webp" alt="Capture 4" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 4</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 5">
-                    <img src="Capture 5.jpg" alt="Capture 5" loading="lazy">
+                    <img src="Capture 5.webp" alt="Capture 5" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 5</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 6">
-                    <img src="Capture 6.jpg" alt="Capture 6" loading="lazy">
+                    <img src="Capture 6.webp" alt="Capture 6" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 6</span><span class="zoom">⤢</span></figcaption>
                 </figure>
                 <figure class="gallery-item" data-caption="Capture 7">
-                    <img src="Capture 7.jpg" alt="Capture 7" loading="lazy">
+                    <img src="Capture 7.webp" alt="Capture 7" loading="lazy">
                     <figcaption class="gallery-caption"><span>Capture 7</span><span class="zoom">⤢</span></figcaption>
                 </figure>
+            </div>
+        </section>
+
+        <!-- ── FLOTTE ── -->
+        <section id="flotte" class="reveal">
+            <div class="section-head">
+                <div class="section-label">// Vaisseaux de l'organisation</div>
+                <h2 class="section-title">Notre flotte</h2>
+            </div>
+            <div class="fleet-grid">
+                <div class="ship-card">
+                    <div class="ship-media">
+                        <img src="ships/polaris.webp" alt="RSI Polaris" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',textContent:'🚀'}))">
+                    </div>
+                    <div class="ship-body">
+                        <div class="ship-role">Corvette — Patrouilleur</div>
+                        <h3>RSI Polaris</h3>
+                        <p>Corvette polyvalente et rapide, conçue pour la patrouille et la défense. Notre vaisseau amiral pour les opérations de sécurité.</p>
+                        <div class="ship-tags"><span class="ship-tag">Équipage 6+</span><span class="ship-tag">Missiles</span><span class="ship-tag">Hangar</span></div>
+                    </div>
+                </div>
+                <div class="ship-card">
+                    <div class="ship-media">
+                        <img src="ships/constellation-mkv.webp" alt="RSI Constellation MKV" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',textContent='🛰️'}))">
+                    </div>
+                    <div class="ship-body">
+                        <div class="ship-role">Multirôle — Expédition</div>
+                        <h3>Constellation MKV</h3>
+                        <p>L'iconique multirôle de RSI, réinventée. Exploration, cargo et soutien — le couteau suisse de l'Ordre.</p>
+                        <div class="ship-tags"><span class="ship-tag">Équipage 4</span><span class="ship-tag">Cargo</span><span class="ship-tag">Snub fighter</span></div>
+                    </div>
+                </div>
+                <div class="ship-card">
+                    <div class="ship-media">
+                        <img src="ships/perseus.webp" alt="Aegis Perseus" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',textContent:'⚔️'}))">
+                    </div>
+                    <div class="ship-body">
+                        <div class="ship-role">Corvette lourde — Dissuasion</div>
+                        <h3>Aegis Perseus</h3>
+                        <p>Deux canons laser taille 7 et une allure de corvette de guerre. La dissuasion made in Aegis pour nos missions à haut risque.</p>
+                        <div class="ship-tags"><span class="ship-tag">Équipage 5+</span><span class="ship-tag">Tourelles</span><span class="ship-tag">Assaut</span></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -842,7 +1081,7 @@
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'images">
         <button class="lightbox-close" id="lb-close" aria-label="Fermer">✕</button>
         <button class="lightbox-prev" id="lb-prev" aria-label="Image précédente">‹</button>
-        <img class="lightbox-img" id="lb-img" src="" alt="">
+        <img class="lightbox-img" id="lb-img" src="" alt="" loading="lazy">
         <div class="lightbox-caption" id="lb-caption"></div>
         <button class="lightbox-next" id="lb-next" aria-label="Image suivante">›</button>
     </div>
@@ -858,6 +1097,47 @@
     </footer>
 
     <script>
+        // ── Thème clair/sombre ──
+        const themeToggle = document.getElementById('theme-toggle');
+
+        function applyTheme(theme) {
+            document.body.classList.toggle('light', theme === 'light');
+            document.documentElement.dataset.theme = theme;
+        }
+
+        applyTheme(localStorage.getItem('theme') || 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            const next = document.body.classList.contains('light') ? 'dark' : 'light';
+            localStorage.setItem('theme', next);
+            applyTheme(next);
+        });
+
+        // ── Compteur animé (stats) ──
+        function animateCount(el) {
+            const target = parseInt(el.dataset.count, 10);
+            const duration = 1400;
+            const start = performance.now();
+            function tick(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(target * eased);
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const statObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCount(e.target);
+                    statObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('.stat-value[data-count]').forEach(el => statObserver.observe(el));
+
         // ── Reveal au scroll ──
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => {
